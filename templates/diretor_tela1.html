@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Alunos</title>
+    <link rel="stylesheet" href="/static/style3.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+        <form action="/adicionar_professor" method="post">
+            <button class="btn">cadastro professor</button>
+        </form>
+            <form action="/adicionar_aluno" method="post">
+            <button class="btn">cadastro aluno</button>
+        </form>
+            <form action="deletar/editar" method="post">
+            <button class="btn">Deletar/editar</button>
+        </form>
+
+        </div>
+        <div class="tab_pesquisa">
+            <h1>pesquisar</h1>
+            <form method="POST" action="/convenio">
+                <input type="text" placeholder="Procurar">
+                <button type="submit">Pesquisar</button>
+                <ul style="display: none;">
+                    {% for produto in produto %}
+                    <li class="prod">{{ produto.descricao}}</li>
+    
+                    {% endfor %}
+                </ul>
+                <div id="search-results"></div>
+    
+            </form>
+    
+    <h3>Informações do aluno/Professor:</h3>
+    <form method="POST" action="/auterar">
+        {% if produto_c %}
+
+        {% for p in produto_c %}
+        <h1>id:<input type="text" name="id" value={{ p[0] }} min="50"></h1>
+        <h1>matricula:<input type="text" name=">matricula" value={{ p[1] }} min="50"></h1>
+        <h1>ano_serie:<input type="text" name="ano_serie" value={{ p[2] }} min="50"></h1>
+        <h1>Nome: <input type="text" name="nome" value={{ p[3] }}></h1>
+        <h1>cpf:<input type="text" name="cpf" value={{ p[4] }}></h1>
+        <h1>categoria:<input type="text" name="categoria" value={{ p[5] }}></h1>
+        <!-- Adicione mais campos conforme necessário -->
+        {% endfor %}
+        {% endif %}
+        <button name="a" value="carrinho">editar</button>
+    </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nome</th>
+                    <th>Matricula</th>
+                    <th>Serie</th>
+                    <th>Data de Ingressão</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
