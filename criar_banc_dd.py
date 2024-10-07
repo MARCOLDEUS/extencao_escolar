@@ -1,10 +1,11 @@
-from flask import Flask,render_template,redirect,request,flash,url_for,send_file, jsonify
+from flask import Flask, render_template, redirect, request, flash, url_for, send_file, jsonify
 import mysql.connector
 from mysql.connector import Error
-app= Flask(__name__)
-app.config['SECRET_KET']= 'MAR'
 
-@app.route('')
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'MAR'  # Corrigido SECRET_KET para SECRET_KEY
+
+@app.route('/')
 def criar_banco_de_dados():
     db_tabela = {
         'host': 'localhost',
@@ -24,62 +25,74 @@ def criar_banco_de_dados():
         cursor.execute("CREATE DATABASE IF NOT EXISTS tabela_escola")
         cunn.commit()
 
-        # Usar o banco de dados 'tabela_prod'
+        # Usar o banco de dados 'tabela_escola'
         cursor.execute("USE tabela_escola")
 
         # Criar tabela 'aluno' se não existir
-        cursor.execute('''CREATE TABLE IF NOT EXISTS ALUNO(
-                           id INT NOT NULL AUTO_INCREMENT,
-                           matricula VARCHAR(12),
-                           ano_serie VARCHAR(10),
-                           cpf VARCHAR(11),
-                           turma VARCHAR(20),
-                           nome_responsavel(80),
-                           email VARCHAR(30),
-                           NUMERO VARCHAR(14),
-                           idade VARCHAR(3),
-                           nome VARCHAR(80),
-                           materias INT(20),
-                           senha VARCHAR(12)
-                           
-                           );''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS ALUNO (
+                          matricula INT NOT NULL AUTO_INCREMENT,  -- Matricula será gerada automaticamente
+                          ano_serie VARCHAR(10),                  
+                          cpf VARCHAR(11),                        
+                          turma VARCHAR(20),                      
+                          email VARCHAR(30),                      
+                          numero VARCHAR(14),                     
+                          idade VARCHAR(3),                       
+                          nome VARCHAR(80),                       
+                          responsavel VARCHAR(80),                                  
+                          senha VARCHAR(12),                      
+                          PRIMARY KEY (matricula)
+                          ) AUTO_INCREMENT=100000;''')
+        
         # Criar tabela 'materias' se não existir
-        cursor.execute('''CREATE TABLE IF NOT MATERIAS(
+        cursor.execute('''CREATE TABLE IF NOT EXISTS MATERIAS(
                            id INT NOT NULL AUTO_INCREMENT,
                            matricula VARCHAR(12),
-                           ANO_SERIE,
+                           ano VARCHAR(10),
                            materia VARCHAR(20),
-                           PROVA1 INT(2),
-                           PROVA2 INT(2),
-                           NOTA_FINAL(2)
+                           prova1 FLOAT(5,2),
+                           prova2 FLOAT(5,2),
+                           nota_final FLOAT(5,2),
+                           PRIMARY KEY (id)
                            );''')
+
         # Criar tabela 'diretor' se não existir
-        cursor.execute('''CREATE TABLE IF NOT DIRETOR(
+        cursor.execute('''CREATE TABLE IF NOT EXISTS DIRETOR(
                            id INT NOT NULL AUTO_INCREMENT,
                            nome VARCHAR(80),
-                           senha varchar(12)
-                           senha_mudanca VARCHAR(12)
+                           senha VARCHAR(12),
+                           senha_mudanca VARCHAR(12),
+                           PRIMARY KEY (id)
                            );''')
-         # Criar tabela 'PROFESSOR' se não existir
-        cursor.execute('''CREATE TABLE IF NOT professor(
-                           id INT NOT NULL AUTO_INCREMENT,
-                           materia_professor(30),
+        
+        # Criar tabela 'professor' se não existir
+        # Criar tabela 'professor' se não existir
+        cursor.execute('''CREATE TABLE IF NOT EXISTS PROFESSOR(
+                           matricula INT NOT NULL AUTO_INCREMENT,
                            nome VARCHAR(80),
+                           cpf VARCHAR(30),
+                           turma VARCHAR(20),
+                           numero VARCHAR(14),
+                           email VARCHAR(30),
                            materia VARCHAR(30),
-                           horario VARCHAR(6),
-                           senha VARCHAR(12)
-                           );''')
-         # Criar tabela 'RESPONSAVEL' se não existir
+                           idade VARCHAR(3),
+                           horario VARCHAR(20),
+                           senha VARCHAR(12),
+                           PRIMARY KEY (matricula)
+                          ) AUTO_INCREMENT=100000;''')
+
+        
+        # Criar tabela 'responsavel' se não existir
         cursor.execute('''CREATE TABLE IF NOT EXISTS RESPONSAVEL(
                            id INT NOT NULL AUTO_INCREMENT,
                            cpf VARCHAR(11),
-                           nome_responsavel(80),
+                           nome_responsavel VARCHAR(80),
                            email VARCHAR(30),
-                           NUMERO VARCHAR(14),
+                           numero VARCHAR(14),
                            idade VARCHAR(3),
-                           senha VARCHAR(12)
-                           
+                           senha VARCHAR(12),
+                           PRIMARY KEY (id)
                            );''')
+        cursor.execute('ALTER TABLE ALUNO ADD COLUMN data_nascimento DATE;')
         cunn.commit()
         
         print("Tabelas e banco de dados criados com sucesso")
@@ -96,4 +109,4 @@ def criar_banco_de_dados():
             cunn.close()
 
 if __name__ == "__main__":
-    app.run(debug=True)  
+    app.run(debug=True)
