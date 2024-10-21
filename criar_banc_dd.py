@@ -38,7 +38,8 @@ def criar_banco_de_dados():
                           numero VARCHAR(14),                     
                           idade VARCHAR(3),                       
                           nome VARCHAR(80),                       
-                          responsavel VARCHAR(80),                                  
+                          responsavel VARCHAR(80),  
+                          cpf_respon VARCHAR(11),                                
                           senha VARCHAR(12),                      
                           PRIMARY KEY (matricula)
                           ) AUTO_INCREMENT=100000;''')
@@ -65,32 +66,25 @@ def criar_banco_de_dados():
                            );''')
         
         # Criar tabela 'professor' se não existir
-        # Criar tabela 'professor' se não existir
         cursor.execute('''CREATE TABLE IF NOT EXISTS PROFESSOR(
                            matricula INT NOT NULL AUTO_INCREMENT,
                            nome VARCHAR(80),
                            cpf VARCHAR(30),
-                           turma VARCHAR(20),
                            numero VARCHAR(14),
                            email VARCHAR(30),
-                           materia VARCHAR(30),
                            idade VARCHAR(3),
-                           horario VARCHAR(20),
                            senha VARCHAR(12),
                            PRIMARY KEY (matricula)
                           ) AUTO_INCREMENT=100000;''')
 
         
-        # Criar tabela 'responsavel' se não existir
-        cursor.execute('''CREATE TABLE IF NOT EXISTS RESPONSAVEL(
-                           id INT NOT NULL AUTO_INCREMENT,
-                           cpf VARCHAR(11),
-                           nome_responsavel VARCHAR(80),
-                           email VARCHAR(30),
-                           numero VARCHAR(14),
-                           idade VARCHAR(3),
-                           senha VARCHAR(12),
-                           PRIMARY KEY (id)
+        # Criar tabela 'materias' se não existir do professor
+        cursor.execute('''CREATE TABLE IF NOT EXISTS MATERIAS_PROFESSOR(
+                           matricula VARCHAR(12),
+                           ano_serie VARCHAR(10),
+                           horario VARCHAR(4),
+                           materia VARCHAR(20),
+                           PRIMARY KEY (matricula)
                            );''')
         cursor.execute('ALTER TABLE ALUNO ADD COLUMN data_nascimento DATE;')
         cunn.commit()
